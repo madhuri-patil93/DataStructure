@@ -1,0 +1,129 @@
+# include<iostream>
+
+using namespace std;
+
+class Node{
+    private:
+        int data;
+        Node* next;
+    public:
+        Node(int data){
+            this->data = data;
+            next = NULL;
+        }
+
+        void setData(int data){    //set the data
+            this->data = data;
+        }
+
+        int getData(){      //get the data
+            return data;
+        }
+
+        void setNext(Node* next){    //set next
+            this->next = next;
+        }
+
+        Node* getNext(){      //get next
+            return next;
+        }
+};
+class LinkList
+{
+    private:
+        Node *rear;
+        Node *front;
+    public:
+        LinkList(){
+            rear=NULL;
+            front=NULL;
+        }
+        
+        void enqueue(int data){         //add from end
+            
+            Node * newNode = new Node(data);
+            
+            if(rear==NULL){
+                rear = newNode;
+                front = rear;
+            }else{
+                rear->setNext(newNode);
+                rear=newNode;
+            }
+            //cout<<"priya"<<endl;
+            
+        }
+        
+        void dequeue(){                  //remove from start
+            
+            if (front != NULL){
+                Node * temp = front;
+                
+                if(front->getNext()==NULL){
+                    cout<<temp->getData()<<" REmoved from queue"<<endl;
+                    front = NULL;
+                    delete temp;
+                }else{
+                    front=front->getNext();
+                    cout<<temp->getData()<<" REmoved from queue"<<endl;
+                    delete temp;
+                }
+            }else{
+                cout<<"queue is empty"<<endl;
+            }
+        }
+        
+         void display(){
+             cout<<rear->getData()<<endl;
+             
+            if(rear != NULL ){
+                Node* temp = front;
+                cout<<"Elements in the queue are ";
+                while(temp!= rear){
+                    cout<<temp->getData()<<" ";
+                    temp=temp->getNext();
+                }cout<<temp->getData()<<" ";
+                cout<<endl;
+            }else{
+                cout<<"queue is empty!!!"<<endl;
+            }
+        }
+};
+
+int main() {
+    LinkList q;    
+   int ch,val;
+   cout<<"1) Insert element to queue"<<endl;
+   cout<<"2) Delete element from queue"<<endl;
+   cout<<"3) Display all the elements of queue"<<endl;
+   cout<<"4) Exit"<<endl;
+   do {
+      cout<<"Enter your choice : "<<endl;
+      cin>>ch;
+      switch(ch) {
+         case 1: {
+            cout<<"Enter value to be enqueue:"<<endl;
+            cin>>val;
+            q.enqueue(val);
+            break;
+         }
+         case 2: {
+            q.dequeue();
+            break;
+         }
+         case 3: {
+            q.display();
+            break;
+         }
+         case 4: {
+            cout<<"Exit"<<endl;
+            break;
+         }
+         default: {
+            cout<<"Invalid Choice"<<endl;
+         }
+      
+      }
+   } while(ch!=4);
+   return 0;
+}

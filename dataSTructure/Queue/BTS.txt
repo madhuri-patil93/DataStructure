@@ -1,0 +1,272 @@
+#include <iostream>
+
+using namespace std;
+class node
+{
+private:
+    int data;
+    node *left;
+    node *right;
+public:
+    node()
+    {
+        data=0;
+       left=NULL;
+       right=NULL;
+    }
+
+    node(int data)
+    {
+        this->data=data;
+         left=NULL;
+         right=NULL;
+    }
+
+    void setData(int data)
+    {
+        this->data=data;
+    }
+
+    void setLeft(node *left)
+    {
+        this->left=left;
+    }
+
+    void setRight(node *right)
+    {
+        this->right=right;
+    }
+
+    int getData()
+    {
+        return data;
+    }
+
+    node *getLeft()
+    {
+        return left;
+    }
+
+      node *getRight()
+    {
+        return right;
+    }
+
+
+};
+
+class BST
+{
+    private:
+      node *root;
+    public:
+        BST()
+        {
+            root=NULL;
+        }
+
+        node *getRoot()
+        {
+            return root;
+        }
+
+        void insertT(int data)
+        {
+            node *n=new node(data);
+            node *temp=root;
+            node *prev=NULL;
+            if(root==NULL)
+            {
+                root=n;
+            }
+            else
+            {
+                while(temp!=NULL)
+                {
+                    if(data<temp->getData())
+                    {
+                        prev=temp;
+                        temp=temp->getLeft();
+                    }
+                    else
+                    {
+                         prev=temp;
+                        temp=temp->getRight();
+                    }
+                }
+                if(data<prev->getData())
+                {
+                    prev->setLeft(n);
+                }
+                else
+                {
+                  prev->setRight(n);
+                }
+
+            }
+        }
+
+
+        void inorder(node *temp)
+        {
+            if(temp==NULL)
+                return;
+            inorder(temp->getLeft());
+            cout<<temp->getData()<<" ";
+            inorder(temp->getRight());
+        }
+
+           void preorder(node *temp)
+        {
+            if(temp==NULL)
+                return;
+            cout<<temp->getData()<<" ";
+            preorder(temp->getLeft());
+            preorder(temp->getRight());
+        }
+
+           void postorder(node *temp)
+        {
+            if(temp==NULL)
+                return;
+
+            postorder(temp->getLeft());
+            postorder(temp->getRight());
+             cout<<temp->getData()<<" ";
+        }
+
+        int countLeafNode(node *temp)
+        {
+            if(temp==NULL)
+                return 0;
+            if(temp->getLeft()==NULL && temp->getRight()==NULL)
+                return 1;
+            else
+               return countLeafNode(temp->getLeft())+countLeafNode(temp->getRight());
+
+        }
+
+        void printLeaf(node *temp)
+        {
+            if(temp==NULL)
+                return;
+            else if(temp->getLeft()==NULL && temp->getRight()==NULL)
+                cout<<temp->getData()<<" ";
+            else
+            {
+                printLeaf(temp->getLeft());
+                printLeaf(temp->getRight());
+            }
+
+        }
+
+         int countNonLeafNode(node *temp)
+        {
+            if(temp==NULL)
+                return 0;
+            if(temp->getLeft()==NULL && temp->getRight()==NULL)
+                return 0;
+            else
+               return 1+ countNonLeafNode(temp->getLeft())+countNonLeafNode(temp->getRight());
+
+        }
+
+
+        void printNonLeaf(node *temp)
+        {
+            if(temp==NULL)
+                return;
+            else if(temp->getLeft()==NULL && temp->getRight()==NULL)
+                return;
+            else
+            {
+              printNonLeaf(temp->getLeft());
+              cout<<temp->getData()<<" ";
+              printNonLeaf(temp->getRight());
+            }
+        }
+
+         int countTotalNode(node *temp)
+        {
+
+            if(temp==NULL)
+                return 0;
+            else
+               return 1+ countTotalNode(temp->getLeft())+countTotalNode(temp->getRight());
+
+        }
+
+        int HeightOfTree(node *temp)
+              {
+                  if(temp==NULL)
+                      return 0;
+                        int left=HeightOfTree(temp->getLeft());
+                         int right=HeightOfTree(temp->getRight());
+                         if(left>right)
+                         return (left+1);
+                       else
+                         return (right+1);
+                  
+              }
+};
+int main()
+{
+   BST t;
+    int data;
+    string cmd;
+    while(1)
+    {
+        cin>>cmd;
+        if(cmd=="ex")
+        {
+            break;
+        }
+        if(cmd=="ins")
+        {
+            cin>>data;
+            t.insertT(data);
+        }
+
+        if(cmd=="in")
+        {
+            t.inorder(t.getRoot());
+        }
+         if(cmd=="pre")
+        {
+            t.preorder(t.getRoot());
+        }
+         if(cmd=="post")
+        {
+            t.postorder(t.getRoot());
+        }
+         if(cmd=="leaf")
+        {
+            int count1=t.countLeafNode(t.getRoot());
+            cout<<count1;
+        }
+        if(cmd=="nleaf")
+        {
+            int count1=t.countNonLeafNode(t.getRoot());
+            cout<<count1;
+        }
+         if(cmd=="tot")
+        {
+            int count1=t.countTotalNode(t.getRoot());
+            cout<<count1;
+        }
+        if(cmd=="pleaf")
+        {
+            t.printLeaf(t.getRoot());
+        }
+        if(cmd=="pnleaf")
+        {
+            t.printNonLeaf(t.getRoot());
+        }
+          if(cmd=="ht")
+        {
+           int height= t.HeightOfTree(t.getRoot());
+           cout<<height;
+        }
+    }
+    return 0;
+}

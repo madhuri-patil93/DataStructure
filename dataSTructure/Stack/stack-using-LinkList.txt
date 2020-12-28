@@ -1,0 +1,127 @@
+# include<iostream>
+
+using namespace std;
+
+class Node{
+    private:
+        int data;
+        Node* next;
+    public:
+        Node(int data){
+            this->data = data;
+            next = NULL;
+        }
+
+        void setData(int data){    //set the data
+            this->data = data;
+        }
+
+        int getData(){      //get the data
+            return data;
+        }
+
+        void setNext(Node* next){    //set next
+            this->next = next;
+        }
+
+        Node* getNext(){      //get next
+            return next;
+        }
+};
+class LinkList
+{
+    private:
+        Node *top;
+        
+    public:
+        LinkList(){
+            top=NULL;
+        }
+        
+        void push(int data){         //add from end
+            
+            Node * newNode = new Node(data);
+            
+            if(top==NULL){
+                top = newNode;
+                
+            }else{
+                newNode->setNext(top);
+                top=newNode;
+            }
+        }
+        
+        void pop(){                  //remove from start
+            
+            if (top != NULL){
+                Node * temp = top;
+                
+                if(top->getNext()==NULL){
+                    cout<<temp->getData()<<" REmoved from stack"<<endl;
+                    top = NULL;
+                    delete temp;
+                }else{
+                    top=top->getNext();
+                    cout<<temp->getData()<<" REmoved from queue"<<endl;
+                    delete temp;
+                }
+            }else{
+                cout<<"queue is empty"<<endl;
+            }
+        }
+        
+         void display(){
+          
+             
+            if(top != NULL ){
+                Node* temp = top;
+                cout<<"Elements in the stack are ";
+                while(temp!= NULL){
+                    cout<<temp->getData()<<" ";
+                    temp=temp->getNext();
+                }
+                //cout<<temp->getData()<<" ";
+                cout<<endl;
+            }else{
+                cout<<"queue is empty!!!"<<endl;
+            }
+        }
+};
+
+int main() {
+    LinkList s;    
+   int ch,val;
+   cout<<"1) Insert element to queue"<<endl;
+   cout<<"2) Delete element from queue"<<endl;
+   cout<<"3) Display all the elements of queue"<<endl;
+   cout<<"4) Exit"<<endl;
+   do {
+      cout<<"Enter your choice : "<<endl;
+      cin>>ch;
+      switch(ch) {
+         case 1: {
+            cout<<"Enter value to be pushed:"<<endl;
+            cin>>val;
+            s.push(val);
+            break;
+         }
+         case 2: {
+            s.pop();
+            break;
+         }
+         case 3: {
+            s.display();
+            break;
+         }
+         case 4: {
+            cout<<"Exit"<<endl;
+            break;
+         }
+         default: {
+            cout<<"Invalid Choice"<<endl;
+         }
+      
+      }
+   } while(ch!=4);
+   return 0;
+}
